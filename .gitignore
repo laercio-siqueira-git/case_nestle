@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------- Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+
+# ------------------------------------------------------- ambiente e editor
+# Configuração local de ferramenta (permissões e hooks do editor/assistente).
+# Não faz parte da entrega, e um hook de auto-aprovação não deve viajar para a
+# máquina de quem clonar o repositório.
+.claude/
+.vscode/
+.idea/
+
+# Lixo de sistema de arquivos. O projeto vive numa pasta sincronizada pelo
+# OneDrive, que cria `desktop.ini` em qualquer diretório que ganhe um ícone.
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---------------------------------------------------------------- saídas
+# O que está sob `reports/` É versionado de propósito: figuras, benchmark.csv,
+# RESULTS.md, os JSON de números e as duas apresentações. Ignorá-los deixaria
+# quem clona com um RESULTS.md apontando para figuras inexistentes — e quem
+# avalia costuma ler antes de rodar.
+#
+# Isso não contradiz a regra de "nenhum número digitado à mão": o que está
+# versionado é a saída de UMA execução, com data de geração e proveniência no
+# cabeçalho do RESULTS.md. `python scripts/run_all.py` regera tudo.
+#
+# Mesma lógica para `data/refined/` e `data/gold/`: são derivados e
+# reconstruíveis, mas versioná-los faz a arquitetura em camadas existir para
+# quem lê o repositório, e não só para quem o executa. São 47 KB.
+
+# Saídas de execuções exploratórias, essas sim descartáveis: qualquer coisa
+# gerada com `--out` para comparar sem sobrescrever o entregável.
+reports/scratch/
+reports/_*/
+
+# Backup manual dos slides antes de regerar. Convenção: sufixo `.bak`.
+*.bak
+*.pptx.bak
+
+# ------------------------------------------------- material de preparação
+# O gerador da apresentação e os dois PPTX ficam fora do versionamento
+# enquanto os slides estão sendo ajustados à mão. O roteiro é anotação de quem
+# vai apresentar — o que falar, o que não ler em voz alta, que pergunta
+# antecipar — e não faz parte do produto de dados.
+#
+# Os arquivos continuam existindo em `reports/`; só não são commitados. Para
+# publicar a versão final de projeção, basta remover a linha correspondente
+# abaixo e rodar `git add reports/apresentacao.pptx`.
+scripts/build_deck.py
+reports/apresentacao.pptx
+reports/apresentacao_com_roteiro.pptx

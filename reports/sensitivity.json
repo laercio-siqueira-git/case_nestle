@@ -1,0 +1,153 @@
+{
+  "alfa": 0.05,
+  "baseline": "seasonal_naive",
+  "por_horizonte": {
+    "1": {
+      "campeao": "hist_gradient_boosting",
+      "janela_maxima": 284,
+      "janelas": [
+        {
+          "n_test": 36,
+          "periodo": "2014-09 a 2017-08",
+          "mape_campeao": 2.838,
+          "mape_naive": 4.921,
+          "ganho_pct": 41.98,
+          "dm_p": 0.0006,
+          "significativo": true
+        },
+        {
+          "n_test": 72,
+          "periodo": "2011-09 a 2017-08",
+          "mape_campeao": 2.886,
+          "mape_naive": 4.961,
+          "ganho_pct": 41.56,
+          "dm_p": 0.0,
+          "significativo": true
+        },
+        {
+          "n_test": 144,
+          "periodo": "2005-09 a 2017-08",
+          "mape_campeao": 3.575,
+          "mape_naive": 6.268,
+          "ganho_pct": 42.27,
+          "dm_p": 0.0,
+          "significativo": true
+        },
+        {
+          "n_test": 284,
+          "periodo": "1994-01 a 2017-08",
+          "mape_campeao": 3.229,
+          "mape_naive": 4.824,
+          "ganho_pct": 31.87,
+          "dm_p": 0.0,
+          "significativo": true
+        }
+      ],
+      "troca_sinal": false,
+      "amplitude": 10.4,
+      "ganho_min": 31.87,
+      "ganho_max": 42.27,
+      "estavel": true,
+      "veredito": "ESTÁVEL — o ganho se mantém entre +31.9% e +42.3% em todas as janelas",
+      "n_janelas": 4
+    },
+    "3": {
+      "campeao": "hist_gradient_boosting",
+      "janela_maxima": 282,
+      "janelas": [
+        {
+          "n_test": 36,
+          "periodo": "2014-09 a 2017-08",
+          "mape_campeao": 4.195,
+          "mape_naive": 4.921,
+          "ganho_pct": 13.38,
+          "dm_p": 0.4439,
+          "significativo": false
+        },
+        {
+          "n_test": 72,
+          "periodo": "2011-09 a 2017-08",
+          "mape_campeao": 4.472,
+          "mape_naive": 4.961,
+          "ganho_pct": 8.62,
+          "dm_p": 0.4107,
+          "significativo": false
+        },
+        {
+          "n_test": 144,
+          "periodo": "2005-09 a 2017-08",
+          "mape_campeao": 5.529,
+          "mape_naive": 6.268,
+          "ganho_pct": 10.56,
+          "dm_p": 0.1142,
+          "significativo": false
+        },
+        {
+          "n_test": 282,
+          "periodo": "1994-03 a 2017-08",
+          "mape_campeao": 4.592,
+          "mape_naive": 4.852,
+          "ganho_pct": 3.77,
+          "dm_p": 0.479,
+          "significativo": false
+        }
+      ],
+      "troca_sinal": false,
+      "amplitude": 9.61,
+      "ganho_min": 3.77,
+      "ganho_max": 13.38,
+      "estavel": true,
+      "veredito": "ESTÁVEL — o ganho se mantém entre +3.8% e +13.4% em todas as janelas",
+      "n_janelas": 4
+    },
+    "12": {
+      "campeao": "ridge_fourier",
+      "janela_maxima": 273,
+      "janelas": [
+        {
+          "n_test": 36,
+          "periodo": "2014-09 a 2017-08",
+          "mape_campeao": 4.388,
+          "mape_naive": 4.921,
+          "ganho_pct": 10.34,
+          "dm_p": 0.4761,
+          "significativo": false
+        },
+        {
+          "n_test": 72,
+          "periodo": "2011-09 a 2017-08",
+          "mape_campeao": 4.98,
+          "mape_naive": 4.961,
+          "ganho_pct": 0.37,
+          "dm_p": 0.9778,
+          "significativo": false
+        },
+        {
+          "n_test": 144,
+          "periodo": "2005-09 a 2017-08",
+          "mape_campeao": 8.277,
+          "mape_naive": 6.268,
+          "ganho_pct": -29.38,
+          "dm_p": 0.1336,
+          "significativo": false
+        },
+        {
+          "n_test": 273,
+          "periodo": "1994-12 a 2017-08",
+          "mape_campeao": 6.014,
+          "mape_naive": 4.969,
+          "ganho_pct": -18.43,
+          "dm_p": 0.1553,
+          "significativo": false
+        }
+      ],
+      "troca_sinal": true,
+      "amplitude": 39.72,
+      "ganho_min": -29.38,
+      "ganho_max": 10.34,
+      "estavel": false,
+      "veredito": "NÃO REPRODUZÍVEL — o ganho troca de sinal entre janelas (-29.4% a +10.3%)",
+      "n_janelas": 4
+    }
+  }
+}

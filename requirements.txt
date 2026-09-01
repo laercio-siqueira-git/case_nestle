@@ -1,0 +1,60 @@
+# Núcleo do pipeline.
+#
+# ATENÇÃO — o que estas faixas garantem, e o que não garantem.
+#
+# Elas garantem que o pipeline RODA e que os VEREDITOS se mantêm: quais
+# horizontes têm ganho, quais não têm, quais são reproduzíveis entre janelas.
+# Isso foi verificado.
+#
+# Elas NÃO garantem igualdade dígito a dígito. Modelos lineares e os naives
+# batem exatamente em qualquer ambiente; os de ÁRVORE não — a implementação
+# de HistGradientBoosting e RandomForest muda entre versões de scikit-learn, e
+# o pandas alterou tipos e cópia-na-escrita entre majors. Rodar noutra máquina
+# devolve o mesmo diagnóstico com casas decimais levemente diferentes.
+#
+# Por isso `reports/metrics.json` grava a proveniência da rodada: versões das
+# bibliotecas, hash do CSV bruto e commit. Uma divergência deixa de ser
+# suspeita de erro e passa a ser fato verificável — "reproduziu noutro
+# ambiente, eis qual".
+#
+# Para igualdade exata, gere um lockfile a partir deste arquivo
+# (`pip-compile requirements.txt` ou `uv pip compile`) e instale a partir dele.
+# O projeto não versiona um lock porque ele fixaria a plataforma de quem gerou;
+# a decisão de congelar é de quem opera, e depende do ambiente de destino.
+pandas>=2.0,<4.0
+numpy>=1.26,<3.0
+scikit-learn>=1.4,<2.0
+matplotlib>=3.8,<4.0
+
+# Leitura de config/config.yaml. Não é opcional: é a fonte dos parâmetros
+# do pipeline (ver src/config.py).
+PyYAML>=6.0
+
+# Testes de hipótese usados para que os textos das figuras sejam vereditos
+# medidos, e não frases fixas (Welch no efeito Páscoa). Já vem como
+# dependência do scikit-learn; declarado aqui porque é usado diretamente.
+scipy>=1.11
+
+# Escrita das camadas refined e gold em Parquet. Formato colunar com esquema
+# e tipos embutidos no arquivo — é o passo anterior a Delta, que acrescenta
+# transação e versionamento por cima do mesmo Parquet.
+pyarrow>=15.0
+
+# Desenvolvimento e qualidade
+pytest>=8.0
+ruff>=0.5
+
+# Explicabilidade, opcional.
+# Usado só quando o campeão de algum horizonte é um modelo de árvore: TreeSHAP
+# dá atribuição local ("por que ESTE mês"). Se não estiver instalado, a figura
+# de importância cai para a importância nativa do modelo e o pipeline segue.
+# Para campeão linear o SHAP é dispensável: o coeficiente padronizado já é a
+# explicação exata, e o SHAP linear devolveria coef_j * (x_j - média_j).
+shap>=0.44
+
+# Boosters opcionais.
+# O pipeline roda sem eles: `src/models/registry.py` importa de forma tolerante
+# e simplesmente não registra o modelo se a biblioteca não estiver presente.
+# Instale-os para reproduzir a comparação entre implementações de boosting.
+xgboost>=2.0
+lightgbm>=4.0

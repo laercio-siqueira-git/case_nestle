@@ -1,0 +1,19 @@
+# Normaliza a quebra de linha no repositório.
+#
+# O projeto foi desenvolvido no Windows, onde o padrão é CRLF, mas quem clonar
+# em Linux ou macOS usa LF. Sem esta declaração, o Git decide sozinho por
+# máquina e o mesmo arquivo aparece como "modificado" sem ninguém ter editado —
+# o que polui o diff e esconde mudança de verdade.
+#
+# `text=auto eol=lf`: no repositório sempre LF; no disco, o que a plataforma
+# usa. Vale para todo arquivo de texto, detectado automaticamente.
+* text=auto eol=lf
+
+# Os dados de entrada são CSV e precisam ser lidos igual em qualquer sistema.
+*.csv text eol=lf
+
+# Binários: qualquer conversão os corromperia.
+*.parquet binary
+*.png binary
+*.pptx binary
+*.xlsx binary

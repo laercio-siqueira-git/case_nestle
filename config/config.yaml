@@ -1,0 +1,110 @@
+# Configuração única do pipeline. Nenhum número mágico no código.
+data:
+  raw_path: data/raw/candy_production.csv
+  date_col: observation_date
+  value_col: IPG3113N
+  freq: MS
+
+  # Preços do açúcar, OPCIONAIS. Servem a um teste de hipótese na EDA — se o
+  # programa açucareiro americano explicaria a estagnação do pico — e não
+  # entram como preditor: cobrem só 1992 em diante, e em h=12 precisariam vir
+  # defasadas 12 meses, o que descartaria justamente o sinal recente que um
+  # preço carrega. Ausentes, a EDA roda e apenas pula essa seção.
+  sugar_world_path: data/raw/PSUGAISAUSDM_11.csv   # No. 11 — preço mundial
+  sugar_us_path: data/raw/PSUGAUSAUSDM_16.csv      # No. 16 — preço nos EUA
+
+  # Camadas materializadas em Parquet. `raw` é imutável; `refined` só recebe o
+  # que passou pelo contrato de dados; `gold` é o que o negócio lê. Em produção
+  # estas viram tabelas Delta — mesmo Parquet, com log de transações por cima.
+  refined_dir: data/refined
+  gold_dir: data/gold
+
+contract:
+  min_value: 10.0
+  max_value: 500.0
+  min_observations: 120
+
+features:
+  n_fourier: 2
+  lags: [1, 2, 3, 6, 12, 13, 24]
+  roll_windows: [3, 12]
+
+  # Exógenas de CALENDÁRIO (Páscoa, feriados federais, dias úteis) — não os
+  # preços do açúcar, que não entram no modelo em hipótese alguma.
+  #
+  # DESLIGADAS por medição, não por preferência. A ablação completa (8 modelos ×
+  # 3 horizontes) está em `reports/benchmark_com_exogenas.csv`, reprodutível com
+  # `--config config/ablacao_com_exogenas.yaml`. Efeito de REMOVÊ-LAS sobre o
+  # campeão de cada horizonte, em pontos percentuais de MAPE:
+  #
+  #     h=1   hist_gradient_boosting   -0,076   melhora
+  #     h=3   hist_gradient_boosting   -0,113   melhora
+  #     h=12  ridge_fourier            +0,031   piora
+  #
+  # Melhoram os dois horizontes curtos, entre eles o único com ganho
+  # reproduzível sobre o baseline; piora só h=12, que não vai a produção, e por
+  # uma margem menor que o arredondamento do relatório.
+  #
+  # A decisão não é de acurácia: décimos de p.p. contra um ganho de 40,9% sobre
+  # o baseline em h=1 não movem conclusão nenhuma. É de manutenção — quatro
+  # colunas que não pagam o próprio custo saem da matriz. O achado é consistente
+  # com a EDA, que já não detectava efeito de Páscoa (Welch p = 0,76 / 0,89 /
+  # 0,23) nem correlação com o resíduo mensal (-0,064).
+  #
+  # A flag permanece porque a ablação precisa continuar reprodutível: trocar
+  # para `true` e rodar `make benchmark` refaz a comparação acima.
+  use_exogenous: false
+
+backtest:
+  n_test: 36
+  horizons: [1, 3, 12]
+  min_train: 240
+  season: 12
+
+  # Janelas de teste da análise de sensibilidade. Um resultado medido numa
+  # janela só responde "quanto ganhou naqueles meses", não "o modelo ganha".
+  # Repetir a medição em janelas de tamanhos diferentes revela se o ganho é
+  # reproduzível — e, no horizonte de 12 meses, ele não é: troca de sinal.
+  # A janela máxima disponível é acrescentada automaticamente.
+  janelas_sensibilidade: [36, 72, 144]
+
+model:
+  # Campeão POR HORIZONTE. "Qual o melhor modelo" é pergunta mal formulada sem
+  # dizer para qual decisão. Em h=1 sobra sinal recente (lag_1..lag_6) que as
+  # árvores exploram, e o ganho sobre o baseline é significativo. Em h=12 só
+  # restam lag_12, lag_13 e lag_24 — o mesmo eco sazonal que o baseline já lê —
+  # e nenhum modelo se distingue dele.
+  #
+  # Aceita também uma string única, aplicada a todos os horizontes.
+  champion:
+    # Operacional. XGBoost, HistGB e LightGBM são ESTATISTICAMENTE
+    # INDISTINGUÍVEIS aqui (DM entre XGBoost e HistGB: p = 0,845). O desempate
+    # não pode ser por acurácia — seria falsa precisão sobre 0,009 p.p.
+    #
+    # Critério declarado: o campeão não pode depender de biblioteca opcional.
+    # XGBoost e LightGBM são importados de forma tolerante, então declarar um
+    # deles como campeão quebraria o pipeline em qualquer ambiente sem eles —
+    # contradizendo a promessa do próprio README. HistGB é nativo do
+    # scikit-learn, e por acaso também tem o menor MAPE dos três.
+    1: hist_gradient_boosting
+    3: hist_gradient_boosting
+    # Planejamento (S&OP). Linear porque extrapola tendência, e porque o
+    # coeficiente padronizado já é a explicação — não precisa de aproximador.
+    12: ridge_fourier
+  random_state: 42
+
+# Caminhos de saída, relativos à raiz do projeto. `src/config.py` os resolve
+# contra a raiz, então os scripts rodam de qualquer diretório de trabalho.
+output:
+  figures_dir: reports/figures
+  metrics_path: reports/metrics.json     # métricas + forecast do campeão
+  eda_path: reports/eda.json             # números da análise exploratória
+  benchmark_path: reports/benchmark.csv  # tabela completa do benchmark
+  uncertainty_path: reports/uncertainty.json  # intervalo do ganho + poder do teste
+  sensitivity_path: reports/sensitivity.json  # ganho por janela de teste
+
+# Protocolo de validação. embargo=true é a única opção correta:
+# em previsão direta de horizonte h, os h-1 meses antes do alvo ainda não
+# foram observados na origem da previsão. Ver scripts/audit.py, bloco 2.
+validation:
+  embargo: true

@@ -1,0 +1,390 @@
+{
+  "campeoes": {
+    "1": "hist_gradient_boosting",
+    "3": "hist_gradient_boosting",
+    "12": "ridge_fourier"
+  },
+  "alfa": 0.05,
+  "shap_disponivel": true,
+  "proveniencia": {
+    "python": "3.14.7",
+    "plataforma": "Windows",
+    "commit": null,
+    "hash_dado_bruto": "310335f07908",
+    "bibliotecas": {
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "scipy": "1.18.1",
+      "xgboost": "3.4.1",
+      "lightgbm": "4.7.0"
+    }
+  },
+  "por_horizonte": {
+    "1": {
+      "horizonte": 1,
+      "campeao": "hist_gradient_boosting",
+      "campeao_rotulo": "HistGradientBoosting",
+      "metricas": {
+        "seasonal_naive": {
+          "MAE": 5.452,
+          "RMSE": 6.834,
+          "MAPE": 4.921,
+          "MASE": 1.064,
+          "vies": -2.382
+        },
+        "hist_gradient_boosting": {
+          "MAE": 3.163,
+          "RMSE": 4.099,
+          "MAPE": 2.838,
+          "MASE": 0.617,
+          "vies": -0.801
+        }
+      },
+      "dm_stat": -3.788,
+      "dm_p": 0.0006,
+      "supera_baseline": true,
+      "veredito": "HistGradientBoosting supera o naive sazonal (DM p=0.001) — ganho sustentado por evidência",
+      "erro_por_mes": {
+        "Jan": {
+          "campeao": 3.07,
+          "naive": 2.6
+        },
+        "Fev": {
+          "campeao": 2.87,
+          "naive": 3.69
+        },
+        "Mar": {
+          "campeao": 2.4,
+          "naive": 3.2
+        },
+        "Abr": {
+          "campeao": 2.87,
+          "naive": 4.81
+        },
+        "Mai": {
+          "campeao": 2.9,
+          "naive": 4.61
+        },
+        "Jun": {
+          "campeao": 1.88,
+          "naive": 4.95
+        },
+        "Jul": {
+          "campeao": 2.69,
+          "naive": 5.07
+        },
+        "Ago": {
+          "campeao": 7.87,
+          "naive": 12.8
+        },
+        "Set": {
+          "campeao": 0.92,
+          "naive": 5.65
+        },
+        "Out": {
+          "campeao": 2.22,
+          "naive": 5.7
+        },
+        "Nov": {
+          "campeao": 6.02,
+          "naive": 6.55
+        },
+        "Dez": {
+          "campeao": 2.26,
+          "naive": 5.8
+        }
+      },
+      "mes_maior_ganho": "Ago",
+      "meses_em_que_naive_vence": [
+        "Jan"
+      ],
+      "vies_medio": -0.8,
+      "metodo_explicacao": "SHAP: contribuição média absoluta de cada variável (TreeSHAP)",
+      "importancias": {
+        "lag_12": 31.4,
+        "lag_1": 21.4,
+        "fourier_sin_1": 8.6,
+        "lag_24": 7.1,
+        "lag_13": 5.3,
+        "time_trend": 3.9,
+        "roll_mean_12": 3.8,
+        "is_holiday_peak_season": 3.8,
+        "quarter": 3.4,
+        "roll_mean_3": 2.4,
+        "yoy_diff_12": 1.6,
+        "roll_std_3": 1.5
+      },
+      "importancia_exogenas_total": null,
+      "importancia_eco_sazonal": 40.1,
+      "modelo_recomendado": "hist_gradient_boosting",
+      "intervalo_baseline_lo": -7.13,
+      "intervalo_baseline_hi": 9.2,
+      "forecast_baseline": {
+        "Set/2017": 109.3
+      },
+      "intervalo_cobertura_pct": 80,
+      "intervalo_lo": -4.36,
+      "intervalo_hi": 5.32,
+      "forecast": {
+        "Set/2017": 117.0
+      }
+    },
+    "3": {
+      "horizonte": 3,
+      "campeao": "hist_gradient_boosting",
+      "campeao_rotulo": "HistGradientBoosting",
+      "metricas": {
+        "seasonal_naive": {
+          "MAE": 5.452,
+          "RMSE": 6.834,
+          "MAPE": 4.921,
+          "MASE": 1.064,
+          "vies": -2.382
+        },
+        "hist_gradient_boosting": {
+          "MAE": 4.723,
+          "RMSE": 5.751,
+          "MAPE": 4.195,
+          "MASE": 0.922,
+          "vies": -1.507
+        }
+      },
+      "dm_stat": -0.774,
+      "dm_p": 0.4439,
+      "supera_baseline": false,
+      "veredito": "Empate técnico com o naive sazonal (DM p=0.444) — sem evidência de ganho neste horizonte",
+      "erro_por_mes": {
+        "Jan": {
+          "campeao": 3.7,
+          "naive": 2.6
+        },
+        "Fev": {
+          "campeao": 4.64,
+          "naive": 3.69
+        },
+        "Mar": {
+          "campeao": 2.24,
+          "naive": 3.2
+        },
+        "Abr": {
+          "campeao": 3.7,
+          "naive": 4.81
+        },
+        "Mai": {
+          "campeao": 4.16,
+          "naive": 4.61
+        },
+        "Jun": {
+          "campeao": 1.82,
+          "naive": 4.95
+        },
+        "Jul": {
+          "campeao": 3.71,
+          "naive": 5.07
+        },
+        "Ago": {
+          "campeao": 9.71,
+          "naive": 12.8
+        },
+        "Set": {
+          "campeao": 4.29,
+          "naive": 5.65
+        },
+        "Out": {
+          "campeao": 4.67,
+          "naive": 5.7
+        },
+        "Nov": {
+          "campeao": 7.89,
+          "naive": 6.55
+        },
+        "Dez": {
+          "campeao": 6.14,
+          "naive": 5.8
+        }
+      },
+      "mes_maior_ganho": "Jun",
+      "meses_em_que_naive_vence": [
+        "Jan",
+        "Fev",
+        "Nov",
+        "Dez"
+      ],
+      "vies_medio": -1.51,
+      "metodo_explicacao": "SHAP: contribuição média absoluta de cada variável (TreeSHAP)",
+      "importancias": {
+        "lag_12": 42.3,
+        "lag_24": 11.7,
+        "time_trend": 9.1,
+        "lag_3": 5.0,
+        "quarter": 4.5,
+        "is_holiday_peak_season": 4.3,
+        "roll_std_12": 4.3,
+        "roll_mean_12": 4.1,
+        "fourier_sin_1": 2.6,
+        "yoy_diff_12": 2.6,
+        "fourier_cos_1": 2.5,
+        "roll_std_3": 2.2
+      },
+      "importancia_exogenas_total": null,
+      "importancia_eco_sazonal": 56.6,
+      "modelo_recomendado": "seasonal_naive",
+      "intervalo_baseline_lo": -7.13,
+      "intervalo_baseline_hi": 9.2,
+      "forecast_baseline": {
+        "Set/2017": 109.3,
+        "Out/2017": 119.1,
+        "Nov/2017": 116.8
+      },
+      "intervalo_cobertura_pct": 80,
+      "intervalo_lo": -6.17,
+      "intervalo_hi": 8.9,
+      "forecast": {
+        "Set/2017": 112.9,
+        "Out/2017": 118.6,
+        "Nov/2017": 118.8
+      }
+    },
+    "12": {
+      "horizonte": 12,
+      "campeao": "ridge_fourier",
+      "campeao_rotulo": "Ridge + Fourier",
+      "metricas": {
+        "seasonal_naive": {
+          "MAE": 5.452,
+          "RMSE": 6.834,
+          "MAPE": 4.921,
+          "MASE": 1.064,
+          "vies": -2.382
+        },
+        "ridge_fourier": {
+          "MAE": 4.888,
+          "RMSE": 6.008,
+          "MAPE": 4.388,
+          "MASE": 0.954,
+          "vies": -1.179
+        }
+      },
+      "dm_stat": -0.72,
+      "dm_p": 0.4761,
+      "supera_baseline": false,
+      "veredito": "Empate técnico com o naive sazonal (DM p=0.476) — sem evidência de ganho neste horizonte",
+      "erro_por_mes": {
+        "Jan": {
+          "campeao": 2.25,
+          "naive": 2.6
+        },
+        "Fev": {
+          "campeao": 3.06,
+          "naive": 3.69
+        },
+        "Mar": {
+          "campeao": 3.37,
+          "naive": 3.2
+        },
+        "Abr": {
+          "campeao": 3.67,
+          "naive": 4.81
+        },
+        "Mai": {
+          "campeao": 2.99,
+          "naive": 4.61
+        },
+        "Jun": {
+          "campeao": 4.16,
+          "naive": 4.95
+        },
+        "Jul": {
+          "campeao": 4.43,
+          "naive": 5.07
+        },
+        "Ago": {
+          "campeao": 10.69,
+          "naive": 12.8
+        },
+        "Set": {
+          "campeao": 5.27,
+          "naive": 5.65
+        },
+        "Out": {
+          "campeao": 4.73,
+          "naive": 5.7
+        },
+        "Nov": {
+          "campeao": 7.01,
+          "naive": 6.55
+        },
+        "Dez": {
+          "campeao": 7.02,
+          "naive": 5.8
+        }
+      },
+      "mes_maior_ganho": "Ago",
+      "meses_em_que_naive_vence": [
+        "Mar",
+        "Nov",
+        "Dez"
+      ],
+      "vies_medio": -1.18,
+      "metodo_explicacao": "Magnitude relativa do coeficiente sobre variáveis padronizadas",
+      "importancias": {
+        "lag_12": 30.2,
+        "lag_24": 27.2,
+        "roll_mean_3": 10.0,
+        "yoy_diff_12": 6.6,
+        "time_trend": 6.5,
+        "quarter": 4.2,
+        "lag_13": 3.4,
+        "roll_std_3": 3.2,
+        "fourier_cos_1": 3.2,
+        "is_holiday_peak_season": 2.1,
+        "fourier_sin_1": 1.0,
+        "fourier_cos_2": 0.9
+      },
+      "importancia_exogenas_total": null,
+      "importancia_eco_sazonal": 64.0,
+      "modelo_recomendado": "seasonal_naive",
+      "intervalo_baseline_lo": -7.13,
+      "intervalo_baseline_hi": 9.2,
+      "forecast_baseline": {
+        "Set/2017": 109.3,
+        "Out/2017": 119.1,
+        "Nov/2017": 116.8,
+        "Dez/2017": 116.5,
+        "Jan/2018": 109.5,
+        "Fev/2018": 113.5,
+        "Mar/2018": 105.2,
+        "Abr/2018": 107.4,
+        "Mai/2018": 101.9,
+        "Jun/2018": 104.2,
+        "Jul/2018": 102.6,
+        "Ago/2018": 114.1
+      },
+      "intervalo_cobertura_pct": 80,
+      "intervalo_lo": -8.04,
+      "intervalo_hi": 7.08,
+      "forecast": {
+        "Set/2017": 112.0,
+        "Out/2017": 122.0,
+        "Nov/2017": 120.7,
+        "Dez/2017": 119.8,
+        "Jan/2018": 110.0,
+        "Fev/2018": 111.6,
+        "Mar/2018": 105.4,
+        "Abr/2018": 107.1,
+        "Mai/2018": 102.7,
+        "Jun/2018": 104.4,
+        "Jul/2018": 103.9,
+        "Ago/2018": 112.8
+      }
+    }
+  },
+  "horizontes_com_ganho": [
+    1
+  ],
+  "horizontes_sem_ganho": [
+    3,
+    12
+  ]
+}
