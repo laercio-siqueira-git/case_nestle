@@ -10,6 +10,19 @@ Todo texto de figura é derivado dos dados desta rodada: períodos, meses
 destacados e vereditos de teste são calculados, nunca escritos à mão. Uma
 figura que afirma algo que a rodada não mostra é pior que uma figura sem
 texto, porque parece verificada.
+
+Escopo desta exploração — o que NÃO está aqui
+---------------------------------------------
+A EDA responde às perguntas de que a decisão precisava, e não tenta esgotar a
+série. Ficaram de fora, deliberadamente: correlograma (ACF/PACF), testes
+formais de estacionariedade, teste formal de quebra estrutural, decomposição
+multiplicativa e a investigação individual das 24 anomalias.
+
+O critério foi o mesmo do resto do projeto: uma análise entra quando muda uma
+decisão. As quatro primeiras viram pré-requisito no momento em que um modelo
+paramétrico (SARIMA, ETS) entrar como concorrente — estão no mesmo item do
+roadmap por isso. O detalhamento de cada uma está no README, seção "A
+exploração não está esgotada".
 """
 import argparse
 import sys

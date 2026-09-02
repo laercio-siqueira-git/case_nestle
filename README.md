@@ -315,6 +315,39 @@ python scripts/run_benchmark.py --config config/ablacao_com_exogenas.yaml
 
 ---
 
+## A exploração não está esgotada — e isso é declarado, não omitido
+
+A EDA foi dimensionada para responder às perguntas de que a **decisão** precisava:
+a série tem sinal previsível? de onde ele vem? o que o calendário explica? onde
+o erro custa caro? Ela não tenta esgotar a série, e há um conjunto identificável
+de análises que ficaram de fora — nenhuma delas por descuido:
+
+- **Autocorrelação (ACF/PACF).** A ausência mais notável para quem vem de séries
+  temporais. Não entrou porque a estratégia adotada é tabular e direta: a escolha
+  das defasagens é governada pela regra `k ≥ h`, não pela leitura de um
+  correlograma. Ela volta a ser necessária no momento em que SARIMA entrar como
+  concorrente — e é por isso que os dois estão no mesmo item do roadmap.
+- **Testes formais de estacionariedade** (ADF, KPSS). Mesma razão: modelos de
+  árvore não exigem estacionariedade, e o Ridge recebe a tendência como
+  regressor explícito. Vira pré-requisito com modelos paramétricos.
+- **Teste formal de quebra estrutural** (Chow, Bai-Perron). A quebra do fim dos
+  anos 90 foi identificada por comparação entre blocos e por janela móvel — o
+  efeito é grande e visível, mas a **data** da quebra é estimada de olho, não
+  por procedimento. Para datar com intervalo de confiança, faltou o teste.
+- **Decomposição multiplicativa.** A adotada é aditiva. Como a amplitude sazonal
+  mudou ao longo do histórico, é plausível que a sazonalidade seja proporcional
+  ao nível — o que mudaria o perfil sazonal e a leitura da compressão dos anos
+  90. É a análise que eu faria primeiro se retomasse a EDA.
+- **As 24 anomalias, uma a uma.** Elas são contadas e localizadas no calendário,
+  não investigadas individualmente. Duas das maiores negativas recentes são
+  consecutivas (nov e dez de 2016), o que sugere evento único em vez de dois
+  choques — e isso não foi apurado.
+
+O critério para parar foi o mesmo do resto do projeto: cada análise adicional
+precisa mudar uma **decisão**. As acima mudariam, se o escopo incluísse modelos
+paramétricos ou datação de regime. Como não inclui, ficam registradas aqui em
+vez de ausentes em silêncio.
+
 ## Limitações conhecidas mais sérias
 
 **Em h=12 o experimento é cego, e nós medimos a cegueira.** O campeão empata com
@@ -326,7 +359,7 @@ experimento, não os modelos. Os valores da rodada estão em
 `reports/uncertainty.json` e na seção correspondente do `RESULTS.md`.
 
 Uma ressalva sobre a própria análise, que o script reporta sozinho: em h=12
-sobram 3 blocos por reamostragem, e nesse regime o teste rejeita 26% das vezes
+sobram 3 blocos por reamostragem, e nesse regime o teste rejeita 27% das vezes
 quando a vantagem imposta é zero — deveria rejeitar 5%. O efeito mínimo
 detectável ali é grosseiro e, se algo, otimista. Registrado em vez de escondido:
 uma análise de poder mal calibrada que se apresenta como precisa seria pior que
