@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import re
 from pathlib import Path
 
 import numpy as np
@@ -269,7 +270,7 @@ output: {figures_dir: saida/figuras, metrics_path: saida/rel/metrics.json}
         chave *declarada com valor impossível* é erro humano de edição do YAML e
         precisa aparecer no primeiro milissegundo.
         """
-        with pytest.raises(ValueError, match="backtest.horizons"):
+        with pytest.raises(ValueError, match=re.escape("backtest.horizons")):
             PipelineConfig.load(self._escrever(tmp_path, """
 backtest: {horizons: [0, 3]}
 """), root=tmp_path)

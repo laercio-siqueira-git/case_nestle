@@ -147,7 +147,7 @@ out["resid_std"] = round(float(np.nanstd(resid)), 2)
 # ------------------------------------------- Fig 3: perfil sazonal
 MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
 fig, ax = plt.subplots(figsize=(8.4, 3.2))
-data = [detr[detr.index.month == m].dropna().values for m in range(1, 13)]
+data = [detr[detr.index.month == m].dropna().to_numpy() for m in range(1, 13)]
 # Os rótulos são postos com set_xticklabels e não com o argumento `labels=`:
 # ele foi renomeado em matplotlib 3.9 e removido em 3.11.
 bp = ax.boxplot(data, patch_artist=True, widths=0.6,
@@ -189,7 +189,7 @@ for lbl, (a, b) in periodos.items():
 
 amp = {k: round(float(v.max() - v.min()), 2) for k, v in prof.items()}
 corr = pd.DataFrame(prof).corr()
-corr_min = float(corr.values[np.triu_indices_from(corr, 1)].min())
+corr_min = float(corr.to_numpy()[np.triu_indices_from(corr, 1)].min())
 rotulos = list(prof)
 amp_var_pct = (amp[rotulos[-1]] / amp[rotulos[0]] - 1) * 100
 n_anos = y.index.max().year - y.index.min().year
@@ -294,7 +294,7 @@ else:
 fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.1))
 for ax_, mth, name in zip(axes, [3, 4], ["Março", "Abril"]):
     t = teste_pascoa[mth]
-    ax_.boxplot([t["g1"].values, t["g2"].values],
+    ax_.boxplot([t["g1"].to_numpy(), t["g2"].to_numpy()],
                 patch_artist=True, widths=0.5,
                 boxprops={"facecolor": NAVY, "alpha": 0.85, "lw": 0},
                 medianprops={"color": "white", "lw": 1.6})
@@ -336,7 +336,7 @@ sub6 = (f"Maior salto: {MESES[mes_salto - 1]} ({salto.max():+.1f} p.p. da média
         f"anual) — o pico de nível é {MESES[mes_pico_nivel - 1]}")
 
 fig, ax = plt.subplots(figsize=(9.2, 3.3))
-cores = [ORANGE if v > 0 else NAVY for v in salto.values]
+cores = [ORANGE if v > 0 else NAVY for v in salto.to_numpy()]
 ax.bar(range(1, 13), salto.values, color=cores, alpha=0.9, width=0.62,
        label="Variação vs. mês anterior")
 ax2 = ax.twinx()

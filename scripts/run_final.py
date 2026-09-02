@@ -221,8 +221,8 @@ def rodar_horizonte(h: int, campeao: str, cfg_bt, reg) -> dict:
     imp, sub8, eixo = explicar(modelo, X)
     top = imp.head(12)[::-1]
     fig, ax = plt.subplots(figsize=(7.6, 3.4))
-    ax.barh(top.index, top.values * 100,
-            color=[ORANGE if v > 0.05 else NAVY for v in top.values])
+    ax.barh(top.index, top.to_numpy() * 100,
+            color=[ORANGE if v > 0.05 else NAVY for v in top.to_numpy()])
     ax.set_title(f"Importância das variáveis — {rotulo(campeao)}, h={h}\n{sub8}",
                  loc="left", fontsize=10)
     ax.set_xlabel(eixo)

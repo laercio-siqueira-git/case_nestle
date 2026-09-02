@@ -162,7 +162,8 @@ class PipelineConfig:
         horizontes = self._get("backtest", "horizons", None)
         if horizontes is not None:
             if not isinstance(horizontes, (list, tuple)) or not horizontes:
-                erros.append(f"backtest.horizons deveria ser uma lista não vazia, veio {horizontes!r}")
+                erros.append(f"backtest.horizons deveria ser uma lista não vazia, "
+                             f"veio {horizontes!r}")
             elif any(not isinstance(h, int) or h < 1 for h in horizontes):
                 erros.append(f"backtest.horizons só aceita inteiros >= 1, veio {horizontes!r}")
 

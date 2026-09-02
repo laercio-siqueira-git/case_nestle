@@ -1,0 +1,70 @@
+# Configuração das ferramentas de qualidade.
+#
+# Por que este arquivo existe
+# ---------------------------
+# Sem ele, o `ruff` roda com as regras padrão da versão instalada — e esse
+# conjunto muda entre versões. O pipeline passaria hoje e poderia falhar na
+# primeira etapa daqui a alguns meses, na máquina de outra pessoa, sem que uma
+# linha do projeto tivesse mudado.
+#
+# Declarar as regras aqui torna o lint uma decisão do projeto, e não um efeito
+# colateral de qual `pip install ruff` foi executado.
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+# Os conjuntos escolhidos, e o que cada um protege:
+select = [
+    "E", "W",    # pycodestyle — espaçamento e formatação
+    "F",         # pyflakes — import não usado, variável não definida
+    "I",         # isort — ordem dos imports
+    "UP",        # pyupgrade — sintaxe obsoleta para a versão alvo
+    "B",         # bugbear — armadilhas comuns (mutável como default, etc.)
+    "SIM",       # simplify — condicional e laço que dá para escrever melhor
+    "RUF",       # regras próprias do ruff
+    "ISC",       # concatenação implícita de string
+    "TRY",       # tratamento de exceção
+    "BLE",       # except sem tipo
+    "C4",        # comprehensions
+    "PD",        # pandas — antipadrões comuns
+    "NPY",       # numpy — API depreciada
+]
+
+# Cada exclusão abaixo é uma decisão, não uma regra inconveniente silenciada.
+ignore = [
+    # Mensagem de exceção fora da chamada de `raise`. Este projeto usa mensagens
+    # longas e explicativas de propósito — elas dizem ao usuário qual comando
+    # rodar. Extraí-las para variáveis afastaria o texto do contexto.
+    "TRY003", "EM101", "EM102",
+
+    # `−` (sinal de menos) e `—` (travessão) aparecem em textos e docstrings em
+    # português. São a tipografia correta, não erro de digitação.
+    "RUF001", "RUF002", "RUF003",
+
+    # `zip()` sem `strict=`. Os pares deste projeto vêm de estruturas construídas
+    # juntas (horizontes e cores, meses e valores), onde o descasamento seria um
+    # erro de programação anterior, não de dado. Adotar `strict=True` é melhoria
+    # legítima e está no roadmap; entra numa mudança própria, não junto com
+    # configuração de lint.
+    "B905",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Os scripts são roteiros executados de cima para baixo, não bibliotecas.
+# `E402` (import fora do topo) é inevitável: o `sys.path.insert` precisa vir
+# antes dos imports do projeto para que rodem de qualquer diretório, e o
+# `matplotlib.use("Agg")` antes de importar o pyplot.
+# `E702` (dois comandos na mesma linha) é deliberado nos blocos de figura:
+# `fig.tight_layout(); fig.savefig(...)` é boilerplate de encerramento, e
+# separá-lo em duas linhas afasta o código que desenha do que ele desenha.
+"scripts/*.py" = ["E402", "E702"]
+# Nos testes, comparar explicitamente com True/False é mais legível quando o
+# valor booleano é justamente o que está sob teste.
+"tests/*.py" = ["E712"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# `-q` mantém a saída curta; o pipeline já reporta o resultado por etapa.
+addopts = "-q"

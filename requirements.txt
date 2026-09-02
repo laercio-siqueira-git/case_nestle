@@ -40,9 +40,16 @@ scipy>=1.11
 # transação e versionamento por cima do mesmo Parquet.
 pyarrow>=15.0
 
-# Desenvolvimento e qualidade
+# Desenvolvimento e qualidade.
+#
+# O ruff é fixado por minor de propósito, e é o único assim. As regras que ele
+# aplica por padrão mudam entre versões: sem o limite, a etapa `lint` — que é a
+# PRIMEIRA do pipeline — poderia falhar meses depois, na máquina de outra
+# pessoa, sem que uma linha do projeto tivesse mudado. O conjunto de regras
+# está declarado em `pyproject.toml`, e o limite aqui garante que ele seja
+# interpretado da mesma forma.
 pytest>=8.0
-ruff>=0.5
+ruff>=0.16,<0.17
 
 # Explicabilidade, opcional.
 # Usado só quando o campeão de algum horizonte é um modelo de árvore: TreeSHAP
