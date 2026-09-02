@@ -81,8 +81,12 @@ PERIODO = f"{y.index.min().year}–{y.index.max().year}"
 recessoes = [(pd.Timestamp(a), pd.Timestamp(b)) for a, b in NBER_RECESSIONS
              if pd.Timestamp(b) >= y.index.min() and pd.Timestamp(a) <= y.index.max()]
 fig, ax = plt.subplots(figsize=(9.2, 3.1))
+# As faixas de recessão são estreitas — a de 1980 durou 6 meses, cerca de 1%
+# da largura do eixo. Com opacidade baixa elas somem, e a legenda passa a
+# prometer um sombreado que o leitor não encontra, o que é pior que não ter.
+# Opacidade maior e uma borda fina resolvem sem competir com a série.
 for a, b in recessoes:
-    ax.axvspan(a, b, color=GREY, alpha=0.18, lw=0)
+    ax.axvspan(a, b, color=GREY, alpha=0.32, lw=0.6, edgecolor=GREY)
 ax.plot(y.index, y.values, color=NAVY, lw=0.9)
 ax.plot(y.index, y.rolling(12, center=True).mean(), color=ORANGE, lw=2.0,
         label="Média móvel 12 meses (tendência)")
