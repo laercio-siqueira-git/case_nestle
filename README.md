@@ -84,6 +84,13 @@ pontos de teste disponíveis. Estávamos usando 13% deles.
 > em silêncio. Os números completos, com figuras, estão em
 > `reports/RESULTS.md`.
 
+> **Os dois entregáveis.** Este repositório é o primeiro. O segundo é a
+> apresentação para gestão, em
+> **[`reports/case-ds-laercio-siqueira.pptx`](reports/case-ds-laercio-siqueira.pptx)** —
+> mesma conclusão, contada para quem decide investimento e não lê código.
+> Os slides ocultos ao fim dela são material de apoio para a discussão técnica:
+> camadas de dados, auditoria, pipeline e análise de incerteza.
+
 > **Nota metodológica.** Uma versão anterior deste repositório reportava
 > Gradient Boosting com 3,34% em h=12. Esse número vinha de um backtest que
 > incluía no treino alvos ainda não observados na origem da previsão. O bug
@@ -195,7 +202,11 @@ requer acesso à rede: as variáveis de calendário são calculadas, não baixad
 ├── scripts/                    # orquestração executável
 │   └── run_all.py              # pipeline completo, sem depender de `make`
 ├── tests/                      # garantias do pipeline
-└── reports/                    # figuras, benchmark.csv, eda.json, metrics.json
+└── reports/
+    ├── RESULTS.md              # relatório gerado dos artefatos
+    ├── figures/                # as 16 figuras (24 arquivos, 4 por horizonte)
+    ├── *.json · benchmark.csv  # os números de cada etapa
+    └── case-ds-laercio-siqueira.pptx   # a apresentação
 ```
 
 Regra de dependência: `data` → `features` → `models` → `evaluation`. Nenhum
