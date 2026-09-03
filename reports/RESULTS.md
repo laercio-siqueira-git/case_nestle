@@ -6,9 +6,9 @@
 - **Backtest:** walk-forward, 36 meses de teste, treino mínimo 240, embargo `True`
 - **Horizontes:** [1, 3, 12]
 - **Significância:** Diebold-Mariano bilateral, HAC de Bartlett com h−1 defasagens e correção Harvey-Leybourne-Newbold, α = 0.05
-- **Gerado em:** 2026-09-03 02:52 UTC
+- **Gerado em:** 2026-09-03 03:28 UTC
 - **Ambiente:** Python 3.14.7 (Windows) · numpy 2.5.2, pandas 3.0.5, scikit-learn 1.9.0, scipy 1.18.1, xgboost 3.4.1, lightgbm 4.7.0
-- **Proveniência:** dado bruto `310335f07908`
+- **Proveniência:** commit `bfd49b8` · dado bruto `310335f07908`
 
 > Os **vereditos** deste relatório se reproduzem em qualquer ambiente compatível com o `requirements.txt`. Os **dígitos** dos modelos de árvore, não: a implementação muda entre versões de scikit-learn. Modelos lineares e baselines batem exatamente. É por isso que o ambiente está declarado acima.
 

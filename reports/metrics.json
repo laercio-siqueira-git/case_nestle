@@ -9,7 +9,7 @@
   "proveniencia": {
     "python": "3.14.7",
     "plataforma": "Windows",
-    "commit": null,
+    "commit": "bfd49b8",
     "hash_dado_bruto": "310335f07908",
     "bibliotecas": {
       "numpy": "2.5.2",
